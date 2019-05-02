@@ -100,7 +100,7 @@ void hash_table_insert(HashTable *ht, char *key, char *value)
 
   // if hashKey index is empty; add pair to that location
   if (!lp) {
-    printf("New pair at first index: %s %s %s\n", hashKey, key, value);
+    // printf("New pair at first index: %d %s %s\n", hashKey, key, value);
     ht->storage[hashKey] = pair;
   } 
   // if hashKey index is occupied
@@ -151,7 +151,7 @@ char *hash_table_retrieve(HashTable *ht, char *key)
   LinkedPair *pair = ht->storage[hashKey];
 
   while (pair != NULL) {
-    if (strcmp(pair->key, key)) {
+    if (strcmp(pair->key, key) == 0) {
       return pair->value;
     }
     pair = pair->next;
