@@ -93,26 +93,32 @@ HashTable *create_hash_table(int capacity)
  */
 void hash_table_insert(HashTable *ht, char *key, char *value)
 {
-
   unsigned int hashKey = hash(key, ht->capacity);
   LinkedPair *lp = ht->storage[hashKey];
   LinkedPair *pair = create_pair(key, value); 
 
   // if hashKey index is empty; add pair to that location
-  if (!lp) {
+  if (lp == NULL) {
     // printf("New pair at first index: %d %s %s\n", hashKey, key, value);
     ht->storage[hashKey] = pair;
   } 
   // if hashKey index is occupied
   else {
-    // while index->next has something in it
-    while (lp->next) {
+    // while index has something in it
+    while (lp) {
       // if key in index matches to key passed in; update value
       if (strcmp(lp->key, key) == 0) {
-        // printf("Found matching key: %s %s\n", lp->key, key);
+        // printf("Found matching key: hashKey: %s OurKey: %s storedValue: %s\n", lp->key, key, lp->value);
+        // free(lp->value);
         lp->value = strdup(value);
+        // printf("New value: %s\n", lp->value);
         return;
       }
+      // if next does not exist; break out of loop 
+      else if (!lp->next) {
+        break;
+      }
+      // update loop to next node
       lp = lp->next;
     }
     // if no matches have been found and we reached the end, we want to add the pair as the next pair
@@ -134,6 +140,7 @@ void hash_table_remove(HashTable *ht, char *key)
   LinkedPair *lp = ht->storage[hashKey];
   LinkedPair *previous;
   
+
 
 }
 

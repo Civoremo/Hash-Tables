@@ -69,16 +69,16 @@ char *test_hash_table_insertion_overwrites_correctly()
     hash_table_insert(ht, "key-8", "new-val-8");
     hash_table_insert(ht, "key-9", "new-val-9");
 
-    mu_assert(strcmp(hash_table_retrieve(ht, "key-0"), "new-val-0") == 0, "Value is not overwritten correctly");
-    mu_assert(strcmp(hash_table_retrieve(ht, "key-1"), "new-val-1") == 0, "Value is not overwritten correctly");
-    mu_assert(strcmp(hash_table_retrieve(ht, "key-2"), "new-val-2") == 0, "Value is not overwritten correctly");
-    mu_assert(strcmp(hash_table_retrieve(ht, "key-3"), "new-val-3") == 0, "Value is not overwritten correctly");
-    mu_assert(strcmp(hash_table_retrieve(ht, "key-4"), "new-val-4") == 0, "Value is not overwritten correctly");
-    mu_assert(strcmp(hash_table_retrieve(ht, "key-5"), "new-val-5") == 0, "Value is not overwritten correctly");
-    mu_assert(strcmp(hash_table_retrieve(ht, "key-6"), "new-val-6") == 0, "Value is not overwritten correctly");
-    mu_assert(strcmp(hash_table_retrieve(ht, "key-7"), "new-val-7") == 0, "Value is not overwritten correctly");
-    mu_assert(strcmp(hash_table_retrieve(ht, "key-8"), "new-val-8") == 0, "Value is not overwritten correctly");
-    mu_assert(strcmp(hash_table_retrieve(ht, "key-9"), "new-val-9") == 0, "Value is not overwritten correctly");
+    mu_assert(strcmp(hash_table_retrieve(ht, "key-0"), "new-val-0") == 0, "Value is not overwritten correctly 1");
+    mu_assert(strcmp(hash_table_retrieve(ht, "key-1"), "new-val-1") == 0, "Value is not overwritten correctly 2");
+    mu_assert(strcmp(hash_table_retrieve(ht, "key-2"), "new-val-2") == 0, "Value is not overwritten correctly 3");
+    mu_assert(strcmp(hash_table_retrieve(ht, "key-3"), "new-val-3") == 0, "Value is not overwritten correctly 4");
+    mu_assert(strcmp(hash_table_retrieve(ht, "key-4"), "new-val-4") == 0, "Value is not overwritten correctly 5");
+    mu_assert(strcmp(hash_table_retrieve(ht, "key-5"), "new-val-5") == 0, "Value is not overwritten correctly 6");
+    mu_assert(strcmp(hash_table_retrieve(ht, "key-6"), "new-val-6") == 0, "Value is not overwritten correctly 7");
+    mu_assert(strcmp(hash_table_retrieve(ht, "key-7"), "new-val-7") == 0, "Value is not overwritten correctly 8");
+    mu_assert(strcmp(hash_table_retrieve(ht, "key-8"), "new-val-8") == 0, "Value is not overwritten correctly 9");
+    mu_assert(strcmp(hash_table_retrieve(ht, "key-9"), "new-val-9") == 0, "Value is not overwritten correctly 10");
 
     return NULL; 
 }
@@ -160,7 +160,7 @@ char *all_tests()
     mu_suite_start();
 
     mu_run_test(test_hash_table_insertion_and_retrieval);
-    // mu_run_test(test_hash_table_insertion_overwrites_correctly);
+    mu_run_test(test_hash_table_insertion_overwrites_correctly);
     // mu_run_test(test_hash_table_removes_correctly);
     // mu_run_test(hash_table_resizing_test);
 
