@@ -75,6 +75,10 @@ HashTable *create_hash_table(int capacity)
 {
   HashTable *ht;
 
+  ht = malloc(sizeof(HashTable));
+  ht->capacity = capacity;
+  ht->storage = calloc(capacity, sizeof(LinkedPair *));
+
   return ht;
 }
 
@@ -89,7 +93,37 @@ HashTable *create_hash_table(int capacity)
  */
 void hash_table_insert(HashTable *ht, char *key, char *value)
 {
+  unsigned int hashKey = hash(key, ht->capacity);
+  LinkedPair *lp = ht->storage[hashKey];
+  LinkedPair *pair = create_pair(key, value); 
 
+  // if hashKey index is empty; add pair to that location
+  if (lp == NULL) {
+    // printf("New pair at first index: %d %s %s\n", hashKey, key, value);
+    ht->storage[hashKey] = pair;
+  } 
+  // if hashKey index is occupied
+  else {
+    // while index has something in it
+    while (lp) {
+      // if key in index matches to key passed in; update value
+      if (strcmp(lp->key, key) == 0) {
+        // printf("Found matching key: hashKey: %s OurKey: %s storedValue: %s\n", lp->key, key, lp->value);
+        // free(lp->value);
+        lp->value = strdup(value);
+        // printf("New value: %s\n", lp->value);
+        return;
+      }
+      // if next does not exist; break out of loop 
+      else if (!lp->next) {
+        break;
+      }
+      // update loop to next node
+      lp = lp->next;
+    }
+    // if no matches have been found and we reached the end, we want to add the pair as the next pair
+    lp->next = pair;
+  }
 }
 
 /*
@@ -102,6 +136,11 @@ void hash_table_insert(HashTable *ht, char *key, char *value)
  */
 void hash_table_remove(HashTable *ht, char *key)
 {
+  unsigned int hashKey = hash(key, ht->capacity);
+  LinkedPair *lp = ht->storage[hashKey];
+  LinkedPair *previous;
+  
+
 
 }
 
@@ -115,6 +154,15 @@ void hash_table_remove(HashTable *ht, char *key)
  */
 char *hash_table_retrieve(HashTable *ht, char *key)
 {
+  unsigned int hashKey = hash(key, ht->capacity);
+  LinkedPair *pair = ht->storage[hashKey];
+
+  while (pair != NULL) {
+    if (strcmp(pair->key, key) == 0) {
+      return pair->value;
+    }
+    pair = pair->next;
+  }
   return NULL;
 }
 

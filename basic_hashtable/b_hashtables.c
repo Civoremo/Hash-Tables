@@ -71,6 +71,10 @@ unsigned int hash(char *str, int max)
 BasicHashTable *create_hash_table(int capacity)
 {
   BasicHashTable *ht;
+  ht = malloc(sizeof(BasicHashTable));
+  ht->capacity = capacity;
+  // difference between malloc and calloc: calloc allocates memory and sets value to 0 where malloc does not
+  ht->storage = calloc(capacity, sizeof(Pair *));
 
   return ht;
 }
@@ -84,7 +88,14 @@ BasicHashTable *create_hash_table(int capacity)
  ****/
 void hash_table_insert(BasicHashTable *ht, char *key, char *value)
 {
+  Pair *pair = create_pair(key, value);
+  unsigned int hashKey = hash(key, ht->capacity);
 
+  if (ht->storage[hashKey] == NULL) {
+    printf("Key already exits\n");
+  }
+  ht->storage[hashKey] = pair;
+  // free(pair);
 }
 
 /****
@@ -94,7 +105,14 @@ void hash_table_insert(BasicHashTable *ht, char *key, char *value)
  ****/
 void hash_table_remove(BasicHashTable *ht, char *key)
 {
+  unsigned int hashKey = hash(key, ht->capacity);
+  Pair *pair = ht->storage[hashKey];
 
+  if (pair) {
+    free(ht->storage[hashKey]);
+    // free(pair);
+    ht->storage[hashKey] = NULL;
+  }
 }
 
 /****
@@ -104,6 +122,14 @@ void hash_table_remove(BasicHashTable *ht, char *key)
  ****/
 char *hash_table_retrieve(BasicHashTable *ht, char *key)
 {
+  unsigned int hashKey = hash(key, ht->capacity);
+
+  Pair *pair = ht->storage[hashKey];
+
+  if (pair) {
+    return pair->value;
+  }
+  // free(pair);
   return NULL;
 }
 
@@ -114,7 +140,12 @@ char *hash_table_retrieve(BasicHashTable *ht, char *key)
  ****/
 void destroy_hash_table(BasicHashTable *ht)
 {
+  for (int i = 0; i < ht->capacity -1; i++) {
+    destroy_pair(ht->storage[i]);
+  }
 
+  free(ht->storage);
+  free(ht);
 }
 
 
